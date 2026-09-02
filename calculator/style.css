@@ -1,0 +1,143 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+}
+
+.calculator {
+  width: 320px;
+  background: #22252d;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.display {
+  background: #2a2f3a;
+  color: #ffffff;
+  font-size: 2.5rem;
+  text-align: right;
+  padding: 20px 16px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  overflow: hidden;
+  word-break: break-all;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.btn {
+  font-size: 1.4rem;
+  padding: 18px 0;
+  border: none;
+  border-radius: 10px;
+  background: #3a3f4b;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.05s ease;
+}
+
+.btn:hover {
+  background: #4a4f5b;
+}
+
+.btn:active {
+  transform: scale(0.95);
+}
+
+.btn.operator {
+  background: #ff9f0a;
+  color: #ffffff;
+}
+
+.btn.operator:hover {
+  background: #ffb340;
+}
+
+.btn.clear {
+  background: #e74c3c;
+}
+
+.btn.clear:hover {
+  background: #ef6b5d;
+}
+
+.btn.equals {
+  background: #27ae60;
+  grid-column: span 2;
+}
+
+.btn.equals:hover {
+  background: #2ecc71;
+}
+
+.history {
+  background: #2a2f3a;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  color: #9aa0ab;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.clear-history {
+  background: transparent;
+  border: none;
+  color: #9aa0ab;
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 6px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.clear-history:hover {
+  background: #3a3f4b;
+  color: #ffffff;
+}
+
+.history-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.history-list li {
+  color: #d5d8de;
+  font-size: 0.9rem;
+  text-align: right;
+  padding: 4px 0;
+  border-bottom: 1px solid #3a3f4b;
+}
+
+.history-list li:last-child {
+  border-bottom: none;
+}
