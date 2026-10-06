@@ -1,0 +1,8 @@
+# CCFP documentation-site dependencies (mkdocs-material build).
+# Build:   pip install -r requirements-docs.txt && mkdocs build
+# Preview: mkdocs serve  -> http://localhost:8000
+
+mkdocs>=1.6.1,<2
+mkdocs-material>=9.5.40,<10
+pymdown-extensions>=10.11,<11
+mkdocs-mermaid2-plugin>=1.2,<2

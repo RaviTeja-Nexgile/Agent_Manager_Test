@@ -1,0 +1,1755 @@
+/* =====================================================================
+ * FLOW+ Documentation — Enterprise theme layer.
+ *
+ * Design intent
+ * -------------
+ * Mirrors Frontend/tailwind.config.ts (USWDS / DOT-aligned palette) and
+ * Frontend/src/styles/tokens.css. Optimised for full-bleed, multi-monitor
+ * reading on workstations (1440-3440 px) while staying calm on laptops
+ * and phones. Prose stays at a comfortable 75ch reading column; tables,
+ * code, mermaid, and grid-card breakout panels use the wider canvas.
+ *
+ * Palette
+ * -------
+ *   dot-navy       #112E51   primary brand
+ *   federal-blue   #205493   accent / link
+ *   neutral-base   #565C65   body chrome
+ *   alert-amber    #B8860B   warning
+ *   alert-red      #B50909   danger
+ *   success-green  #2E8540   success
+ *   federal-gold   #CA8A04   tier / status ladder
+ *
+ * Type stack
+ * ----------
+ *   UI / body   Public Sans
+ *   Display     Source Sans 3 (variable)
+ *   Code        JetBrains Mono
+ * ===================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Source+Sans+3:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* =====================================================================
+ * 0. Design tokens
+ * ===================================================================== */
+:root,
+[data-md-color-scheme="default"] {
+  /* ---- Brand --------------------------------------------------- */
+  --flow-navy-50:  #E6EBF1;
+  --flow-navy-100: #C2CDDB;
+  --flow-navy-200: #8B9FB9;
+  --flow-navy-300: #547197;
+  --flow-navy-400: #2A496F;
+  --flow-navy-500: #112E51;
+  --flow-navy-600: #0E2744;
+  --flow-navy-700: #0B1F36;
+  --flow-navy-800: #081728;
+  --flow-navy-900: #050F1A;
+
+  --flow-blue-50:  #E8EEF7;
+  --flow-blue-100: #C3D3EA;
+  --flow-blue-200: #8AA8D3;
+  --flow-blue-300: #517CBC;
+  --flow-blue-400: #2F67A8;
+  --flow-blue-500: #205493;
+  --flow-blue-600: #1B477C;
+  --flow-blue-700: #153965;
+
+  --flow-gray-50:  #F9FAFB;
+  --flow-gray-100: #F0F2F5;
+  --flow-gray-200: #DFE1E2;
+  --flow-gray-300: #A9AEB1;
+  --flow-gray-500: #565C65;
+  --flow-gray-600: #3D4551;
+  --flow-gray-700: #2D323C;
+  --flow-gray-800: #1B1B1B;
+
+  --flow-amber-100: #FFF1D2;
+  --flow-amber-500: #B8860B;
+  --flow-amber-700: #6A4A00;
+  --flow-red-100:   #FDE4E4;
+  --flow-red-500:   #B50909;
+  --flow-red-700:   #6A0000;
+  --flow-green-100: #D8EFDB;
+  --flow-green-500: #2E8540;
+  --flow-green-700: #185024;
+  --flow-gold-500:  #CA8A04;
+  --flow-gold-700:  #7A5200;
+
+  /* ---- Material variable mapping ------------------------------- */
+  --md-primary-fg-color:        var(--flow-navy-500);
+  --md-primary-fg-color--light: var(--flow-navy-400);
+  --md-primary-fg-color--dark:  var(--flow-navy-700);
+  --md-primary-bg-color:        #ffffff;
+  --md-accent-fg-color:         var(--flow-blue-500);
+  --md-accent-fg-color--transparent: rgba(32, 84, 147, 0.10);
+  --md-typeset-a-color:         var(--flow-blue-500);
+
+  --md-default-fg-color:         var(--flow-gray-800);
+  --md-default-fg-color--light:  var(--flow-gray-600);
+  --md-default-fg-color--lighter:var(--flow-gray-500);
+  --md-default-bg-color:         #ffffff;
+  --md-default-bg-color--light:  var(--flow-gray-50);
+
+  --md-code-bg-color:           #F4F6F8;
+  --md-code-fg-color:           var(--flow-gray-700);
+  --md-code-hl-color:           rgba(32, 84, 147, 0.15);
+
+  /* ---- Layout tokens ------------------------------------------- */
+  --flow-layout-max:    1800px;  /* outer canvas width on huge screens */
+  --flow-prose-max:     75ch;     /* reading column */
+  --flow-shadow-sm:     0 1px 2px 0 rgba(17, 46, 81, 0.06);
+  --flow-shadow-md:     0 1px 3px rgba(17, 46, 81, 0.10), 0 4px 12px -2px rgba(17, 46, 81, 0.06);
+  --flow-shadow-lg:     0 4px 24px -8px rgba(17, 46, 81, 0.18), 0 10px 40px -12px rgba(17, 46, 81, 0.12);
+  --flow-radius-sm:     4px;
+  --flow-radius:        8px;
+  --flow-radius-lg:     12px;
+
+  /* ---- Override Material's main grid cap ----------------------- */
+  --md-grid: var(--flow-layout-max);
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color:        var(--flow-navy-500);
+  --md-primary-fg-color--light: var(--flow-navy-300);
+  --md-primary-fg-color--dark:  var(--flow-navy-800);
+
+  --md-accent-fg-color:         var(--flow-blue-300);
+  --md-typeset-a-color:         var(--flow-blue-200);
+
+  --md-default-fg-color:        #F0F0F0;
+  --md-default-bg-color:        #0B1F36;
+  --md-default-bg-color--light: var(--flow-navy-700);
+
+  --md-code-bg-color:           rgba(255, 255, 255, 0.04);
+  --md-code-fg-color:           var(--flow-blue-100);
+  --md-code-hl-color:           rgba(130, 168, 211, 0.20);
+
+  --flow-shadow-sm:             0 1px 2px 0 rgba(0, 0, 0, 0.4);
+  --flow-shadow-md:             0 4px 12px -2px rgba(0, 0, 0, 0.5);
+  --flow-shadow-lg:             0 10px 40px -12px rgba(0, 0, 0, 0.55);
+}
+
+/* =====================================================================
+ * 1. Container — full-bleed canvas, no outer cap
+ *
+ *    Material's default caps `.md-grid` at 1220 px and we previously
+ *    raised that to 1800 px. Both leave gutters on wide / zoomed-in
+ *    viewports. Let the grid use the full viewport so zooming never
+ *    leaves dead space at the edges.
+ * ===================================================================== */
+.md-grid {
+  max-width: none !important;
+}
+
+/* On extra-wide displays give the sidebar a touch more room and make
+   sure the secondary TOC sits comfortably away from the prose column. */
+@media (min-width: 1600px) {
+  .md-sidebar--primary   { width: 16rem; }
+  .md-sidebar--secondary { width: 16rem; }
+}
+
+/* Prose column — clamp reading width so long lines don't fatigue the
+   eye, but allow `.flow-bleed` blocks (cards, mermaid, tables) to use
+   the full available canvas. Apply only on content pages with both
+   sidebars present so home/landing pages keep their full width. */
+@media (min-width: 1440px) {
+  .md-content__inner > p,
+  .md-content__inner > ul:not(.task-list):not(.md-nav__list),
+  .md-content__inner > ol,
+  .md-content__inner > h1,
+  .md-content__inner > h2,
+  .md-content__inner > h3,
+  .md-content__inner > h4,
+  .md-content__inner > h5,
+  .md-content__inner > h6,
+  .md-content__inner > blockquote,
+  .md-content__inner > .admonition,
+  .md-content__inner > details {
+    max-width: 80ch;
+  }
+}
+
+/* On the home / landing-style pages (where navigation is hidden) let
+   layouts breathe to the full container width. */
+.md-content[data-md-component="content"] .md-content__inner.md-typeset,
+body.flow-landing .md-content__inner {
+  max-width: none;
+}
+
+/* =====================================================================
+ * 2. Typography — fluid, responsive, brand-aligned
+ * ===================================================================== */
+body, .md-typeset {
+  font-family: 'Public Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-feature-settings: 'rlig' 1, 'calt' 1, 'ss01' 1;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.md-typeset {
+  font-size: clamp(.78rem, .65rem + .2vw, .9rem);
+  line-height: 1.65;
+}
+
+.md-typeset code,
+.md-typeset pre,
+.md-typeset kbd {
+  font-family: 'JetBrains Mono', 'Source Code Pro', 'Courier New', monospace;
+  font-feature-settings: 'liga' 0, 'calt' 0;
+}
+
+/* Display headings — Source Sans 3 for a crisper executive feel. */
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3 {
+  font-family: 'Source Sans 3', 'Public Sans', system-ui, sans-serif;
+  letter-spacing: -0.015em;
+}
+
+.md-typeset h1 {
+  color: var(--flow-navy-500);
+  font-weight: 700;
+  font-size: clamp(1.6rem, 1.2rem + 1.2vw, 2.4rem);
+  line-height: 1.15;
+  margin: 0 0 .9rem;
+  letter-spacing: -0.022em;
+}
+[data-md-color-scheme="slate"] .md-typeset h1 { color: var(--flow-navy-100); }
+
+.md-typeset h2 {
+  color: var(--flow-navy-600);
+  font-weight: 700;
+  font-size: clamp(1.25rem, 1rem + .8vw, 1.7rem);
+  line-height: 1.2;
+  margin: 2.4rem 0 .8rem;
+  padding-bottom: .35rem;
+  border-bottom: 1px solid rgba(17, 46, 81, 0.12);
+}
+[data-md-color-scheme="slate"] .md-typeset h2 {
+  color: #E6EBF1;
+  border-bottom-color: rgba(194, 205, 219, 0.15);
+}
+
+.md-typeset h3 {
+  color: var(--flow-blue-700);
+  font-weight: 600;
+  font-size: clamp(1.05rem, .9rem + .35vw, 1.25rem);
+  line-height: 1.3;
+  margin: 1.8rem 0 .6rem;
+}
+[data-md-color-scheme="slate"] .md-typeset h3 { color: var(--flow-blue-100); }
+
+.md-typeset h4 {
+  font-weight: 600;
+  font-size: clamp(.95rem, .85rem + .15vw, 1.05rem);
+  color: var(--flow-gray-700);
+  margin: 1.4rem 0 .5rem;
+}
+[data-md-color-scheme="slate"] .md-typeset h4 { color: var(--flow-blue-100); }
+
+/* Anchor link "¶" — visible only on hover, GitHub-style. */
+.md-typeset .headerlink {
+  color: var(--flow-blue-300);
+  opacity: 0;
+  transition: opacity .15s ease;
+  margin-left: .35em;
+}
+.md-typeset h1:hover .headerlink,
+.md-typeset h2:hover .headerlink,
+.md-typeset h3:hover .headerlink,
+.md-typeset h4:hover .headerlink,
+.md-typeset h5:hover .headerlink,
+.md-typeset h6:hover .headerlink {
+  opacity: 1;
+}
+
+/* Paragraph rhythm. */
+.md-typeset p { margin: 0 0 .9em; }
+
+/* =====================================================================
+ * 3. Header / tabs / footer — branded chrome
+ * ===================================================================== */
+.md-header {
+  background: linear-gradient(180deg, var(--flow-navy-500) 0%, var(--flow-navy-600) 100%);
+  box-shadow: var(--flow-shadow-sm);
+  height: 3rem;
+}
+.md-header__inner { padding: 0 .8rem; }
+
+.md-header__title {
+  font-family: 'Source Sans 3', 'Public Sans', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.md-tabs {
+  background-color: var(--flow-navy-700);
+  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.06);
+}
+.md-tabs__link {
+  opacity: .82;
+  font-weight: 500;
+  transition: opacity .15s ease, color .15s ease;
+}
+.md-tabs__link:hover,
+.md-tabs__link--active {
+  opacity: 1;
+  color: var(--flow-blue-100);
+}
+
+.md-footer {
+  background-color: var(--flow-navy-700);
+}
+.md-footer-meta {
+  background-color: var(--flow-navy-800);
+}
+
+/* =====================================================================
+ * 4. Links — federal-blue, hairline underline on hover
+ * ===================================================================== */
+.md-typeset a {
+  color: var(--flow-blue-500);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color .15s ease, color .15s ease;
+}
+.md-typeset a:hover {
+  color: var(--flow-blue-700);
+  border-bottom-color: var(--flow-blue-500);
+}
+[data-md-color-scheme="slate"] .md-typeset a       { color: var(--flow-blue-200); }
+[data-md-color-scheme="slate"] .md-typeset a:hover {
+  color: var(--flow-blue-100);
+  border-bottom-color: var(--flow-blue-300);
+}
+
+/* =====================================================================
+ * 5. Tables — dense, sticky header, stripe + hover, scroll on overflow
+ * ===================================================================== */
+.md-typeset table:not([class]) {
+  width: 100%;
+  display: table;
+  font-size: 0.82rem;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 1.2em 0;
+  border: 1px solid rgba(17, 46, 81, 0.12);
+  border-radius: var(--flow-radius-sm);
+  overflow: hidden;
+  box-shadow: var(--flow-shadow-sm);
+}
+
+.md-typeset table:not([class]) thead th {
+  background-color: var(--flow-navy-500);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.01em;
+  padding: .65em .85em;
+  text-align: left;
+  border: none;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.md-typeset table:not([class]) tbody tr:nth-child(even) td {
+  background-color: var(--flow-gray-50);
+}
+.md-typeset table:not([class]) tbody tr:hover td {
+  background-color: var(--flow-navy-50);
+}
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) tbody tr:nth-child(even) td {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) tbody tr:hover td {
+  background-color: rgba(32, 84, 147, 0.20);
+}
+.md-typeset table:not([class]) td {
+  padding: .55em .85em;
+  border-top: 1px solid rgba(17, 46, 81, 0.08);
+  vertical-align: top;
+  transition: background-color .12s ease;
+}
+
+/* Wrap tables in a horizontal-scroll container on narrow screens. */
+.md-typeset > table:not([class]),
+.md-typeset .md-table {
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+/* =====================================================================
+ * 6. Code — soft federal tone, syntax-friendly
+ * ===================================================================== */
+.md-typeset code {
+  background-color: rgba(32, 84, 147, 0.08);
+  color: var(--flow-blue-700);
+  padding: .15em .4em;
+  border-radius: 4px;
+  font-size: .86em;
+  font-weight: 500;
+}
+[data-md-color-scheme="slate"] .md-typeset code {
+  background-color: rgba(130, 168, 211, 0.15);
+  color: var(--flow-blue-100);
+}
+
+.md-typeset pre {
+  border-radius: var(--flow-radius);
+  box-shadow: var(--flow-shadow-sm);
+  border: 1px solid rgba(17, 46, 81, 0.08);
+}
+.md-typeset pre > code {
+  background: transparent;
+  color: inherit;
+  font-size: .8rem;
+  line-height: 1.55;
+  font-weight: 400;
+}
+
+/* Copy button — refined hover. */
+.md-clipboard {
+  color: var(--flow-gray-300);
+  opacity: 0;
+  transition: opacity .15s ease, color .15s ease;
+}
+.md-typeset pre:hover .md-clipboard,
+.md-clipboard:focus { opacity: 1; }
+.md-clipboard:hover { color: var(--flow-blue-500); }
+
+/* =====================================================================
+ * 7. Admonitions — calm, brand-aligned
+ * ===================================================================== */
+.md-typeset .admonition,
+.md-typeset details {
+  border-left-width: 4px;
+  border-radius: var(--flow-radius);
+  font-size: 0.85rem;
+  box-shadow: var(--flow-shadow-sm);
+}
+.md-typeset .admonition.note,    .md-typeset details.note,
+.md-typeset .admonition.info,    .md-typeset details.info     { border-color: var(--flow-blue-500); }
+.md-typeset .admonition.warning, .md-typeset details.warning  { border-color: var(--flow-amber-500); }
+.md-typeset .admonition.danger,  .md-typeset details.danger,
+.md-typeset .admonition.failure, .md-typeset details.failure  { border-color: var(--flow-red-500); }
+.md-typeset .admonition.success, .md-typeset details.success,
+.md-typeset .admonition.tip,     .md-typeset details.tip      { border-color: var(--flow-green-500); }
+.md-typeset .admonition.abstract,.md-typeset details.abstract { border-color: var(--flow-navy-500); }
+
+.md-typeset .note > .admonition-title,    .md-typeset .note > summary,
+.md-typeset .info > .admonition-title,    .md-typeset .info > summary    { background-color: var(--flow-blue-50); }
+.md-typeset .warning > .admonition-title, .md-typeset .warning > summary { background-color: var(--flow-amber-100); }
+.md-typeset .danger > .admonition-title,  .md-typeset .danger > summary,
+.md-typeset .failure > .admonition-title, .md-typeset .failure > summary { background-color: var(--flow-red-100); }
+.md-typeset .success > .admonition-title, .md-typeset .success > summary,
+.md-typeset .tip > .admonition-title,     .md-typeset .tip > summary    { background-color: var(--flow-green-100); }
+.md-typeset .abstract > .admonition-title,.md-typeset .abstract > summary { background-color: var(--flow-navy-50); }
+
+/* =====================================================================
+ * 8. Grid cards — responsive, dense on big screens
+ *
+ *    Material's `<div class="grid cards">` ships with `display:contents`
+ *    on the inner <ul> which collapses to block flow. Project a real
+ *    grid on the wrapper instead so cards adapt to any viewport.
+ * ===================================================================== */
+.md-typeset .grid.cards { margin: 1.2rem 0; }
+.md-typeset .grid.cards > ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+@media (min-width: 1280px) {
+  .md-typeset .grid.cards > ul {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.25rem;
+  }
+}
+@media (min-width: 1920px) {
+  .md-typeset .grid.cards > ul {
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+/* Card surface — calm, enterprise. */
+.md-typeset .grid.cards > ul > li,
+.md-typeset .grid.cards > * {
+  background: var(--md-default-bg-color);
+  border: 1px solid rgba(17, 46, 81, 0.10);
+  border-radius: var(--flow-radius-lg);
+  padding: 1.25rem 1.4rem;
+  margin: 0;
+  transition: box-shadow .18s ease, transform .18s ease, border-color .18s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--flow-shadow-sm);
+}
+.md-typeset .grid.cards > ul > li::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--flow-navy-500) 0%, var(--flow-blue-500) 100%);
+  opacity: 0;
+  transition: opacity .18s ease;
+}
+.md-typeset .grid.cards > ul > li:hover {
+  border-color: var(--flow-blue-300);
+  box-shadow: var(--flow-shadow-md);
+  transform: translateY(-1px);
+}
+.md-typeset .grid.cards > ul > li:hover::before { opacity: 1; }
+
+.md-typeset .grid.cards > ul > li > p:first-child {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--flow-navy-500);
+  margin-bottom: .4rem;
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+}
+[data-md-color-scheme="slate"] .md-typeset .grid.cards > ul > li > p:first-child { color: var(--flow-blue-100); }
+
+.md-typeset .grid.cards > ul > li hr {
+  border: 0;
+  border-top: 1px solid rgba(17, 46, 81, 0.10);
+  margin: .5rem 0 .75rem;
+}
+
+.md-typeset .grid.cards .twemoji {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.md-typeset .grid.cards .twemoji svg { fill: var(--flow-blue-500); }
+[data-md-color-scheme="slate"] .md-typeset .grid.cards .twemoji svg { fill: var(--flow-blue-300); }
+
+/* Inner bullet lists in cards — denser. */
+.md-typeset .grid.cards li ul {
+  margin: .35rem 0 0;
+  padding-left: 1.1rem;
+  font-size: .85rem;
+}
+.md-typeset .grid.cards li ul li { margin: .15rem 0; }
+
+/* =====================================================================
+ * 9. Persona / status badges — match in-app role chips
+ * ===================================================================== */
+.persona-badge {
+  display: inline-block;
+  padding: .12rem .55rem;
+  border-radius: 999px;
+  font-size: .72rem;
+  font-weight: 600;
+  margin: 0 .15rem;
+  background-color: rgba(32, 84, 147, 0.10);
+  color: var(--flow-blue-700);
+  border: 1px solid rgba(32, 84, 147, 0.25);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  vertical-align: 1px;
+}
+.persona-badge.super-admin { background-color: rgba(17, 46, 81, 0.12);  color: var(--flow-navy-500);  border-color: rgba(17, 46, 81, 0.35); }
+.persona-badge.toc         { background-color: rgba(32, 84, 147, 0.12); color: var(--flow-blue-700);  border-color: rgba(32, 84, 147, 0.30); }
+.persona-badge.flow        { background-color: rgba(46, 133, 64, 0.12); color: var(--flow-green-700); border-color: rgba(46, 133, 64, 0.30); }
+.persona-badge.mto         { background-color: rgba(202, 138, 4, 0.14); color: var(--flow-gold-700); border-color: rgba(202, 138, 4, 0.30); }
+.persona-badge.railroad    { background-color: rgba(184, 134, 11, 0.14); color: var(--flow-amber-700); border-color: rgba(184, 134, 11, 0.30); }
+.persona-badge.auditor     { background-color: rgba(86, 92, 101, 0.14); color: var(--flow-gray-700);  border-color: rgba(86, 92, 101, 0.30); }
+[data-md-color-scheme="slate"] .persona-badge {
+  background-color: rgba(130, 168, 211, 0.20);
+  color: var(--flow-blue-50);
+  border-color: rgba(130, 168, 211, 0.40);
+}
+
+.synthetic-banner {
+  display: inline-block;
+  padding: .22rem .65rem;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--flow-amber-700);
+  background-color: var(--flow-amber-100);
+  border: 1px solid #D4A23A;
+  border-radius: var(--flow-radius-sm);
+}
+
+/* =====================================================================
+ * 10. Blockquotes — federal-blue accent rail
+ * ===================================================================== */
+.md-typeset blockquote {
+  border-left: 4px solid var(--flow-blue-500);
+  background-color: rgba(32, 84, 147, 0.04);
+  padding: .65em 1.1em;
+  color: var(--flow-gray-600);
+  border-radius: 0 var(--flow-radius-sm) var(--flow-radius-sm) 0;
+  margin: 1em 0;
+}
+[data-md-color-scheme="slate"] .md-typeset blockquote {
+  background-color: rgba(130, 168, 211, 0.08);
+  color: var(--flow-navy-100);
+}
+
+/* =====================================================================
+ * 11. Sidebar / navigation — crisp active states, breath
+ * ===================================================================== */
+.md-nav__title {
+  font-family: 'Source Sans 3', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--flow-navy-600);
+}
+[data-md-color-scheme="slate"] .md-nav__title { color: var(--flow-navy-100); }
+
+.md-nav__link {
+  transition: color .12s ease;
+  border-radius: 4px;
+  padding: .25rem .4rem;
+  margin: .05rem 0;
+}
+.md-nav__link:hover {
+  color: var(--flow-blue-500);
+  background-color: rgba(32, 84, 147, 0.05);
+}
+
+.md-nav__item .md-nav__link--active,
+.md-nav__item .md-nav__link--active code {
+  color: var(--flow-blue-500);
+  font-weight: 600;
+  background-color: rgba(32, 84, 147, 0.08);
+}
+
+/* =====================================================================
+ * 12. Search — federal-blue focus, refined dropdown
+ * ===================================================================== */
+.md-search__input {
+  background-color: rgba(255, 255, 255, 0.10);
+  transition: background-color .15s ease, box-shadow .15s ease;
+}
+.md-search__input:hover { background-color: rgba(255, 255, 255, 0.16); }
+.md-search__input:focus { background-color: #ffffff; }
+.md-search-result__meta { background-color: rgba(32, 84, 147, 0.08); }
+
+/* =====================================================================
+ * 13. Mermaid — full-bleed on big screens, soft frame
+ * ===================================================================== */
+.md-typeset .mermaid {
+  text-align: center;
+  padding: 1rem;
+  background-color: var(--flow-gray-50);
+  border: 1px solid rgba(17, 46, 81, 0.08);
+  border-radius: var(--flow-radius);
+  margin: 1.2em 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+[data-md-color-scheme="slate"] .md-typeset .mermaid {
+  background-color: rgba(255, 255, 255, 0.03);
+  border-color: rgba(194, 205, 219, 0.12);
+}
+.md-typeset .mermaid svg { max-width: 100%; height: auto; }
+
+/* =====================================================================
+ * 14. Hero region — landing page top, branded band
+ *
+ *    Activated by adding `.flow-hero` to a container in markdown, or by
+ *    auto-styling the introduction block of pages with `hide:nav`.
+ * ===================================================================== */
+body[class*="md-page--landing"] .md-content__inner > p:first-of-type {
+  font-size: 1.05rem;
+  color: var(--flow-gray-600);
+  margin-bottom: 1.5rem;
+}
+
+/* Decorative top stripe on the home page (hide-nav pages). */
+.md-content__inner .md-typeset > h1:first-of-type {
+  position: relative;
+  padding-top: .6rem;
+}
+.md-content__inner .md-typeset > h1:first-of-type::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 56px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--flow-navy-500) 0%, var(--flow-blue-500) 100%);
+  border-radius: 2px;
+}
+
+/* =====================================================================
+ * 15. Buttons — Material's `md-button` styled for federal palette
+ * ===================================================================== */
+.md-typeset .md-button {
+  background: var(--flow-navy-500);
+  color: #ffffff !important;
+  border: 1px solid var(--flow-navy-500);
+  border-radius: var(--flow-radius-sm);
+  font-weight: 600;
+  padding: .55rem 1.1rem;
+  transition: background .15s ease, transform .12s ease, box-shadow .12s ease;
+  box-shadow: var(--flow-shadow-sm);
+}
+.md-typeset .md-button:hover {
+  background: var(--flow-navy-600);
+  border-color: var(--flow-navy-600);
+  transform: translateY(-1px);
+  box-shadow: var(--flow-shadow-md);
+  border-bottom-color: var(--flow-navy-600);
+}
+.md-typeset .md-button--primary {
+  background: var(--flow-blue-500);
+  border-color: var(--flow-blue-500);
+}
+.md-typeset .md-button--primary:hover {
+  background: var(--flow-blue-700);
+  border-color: var(--flow-blue-700);
+}
+
+/* =====================================================================
+ * 16. Footer / page navigation
+ * ===================================================================== */
+.md-footer__inner.md-grid {
+  padding: 1.4rem .8rem;
+}
+.md-footer__link {
+  transition: opacity .15s ease;
+}
+.md-footer__direction { font-size: .68rem; opacity: .7; }
+.md-footer__title     { font-weight: 600; }
+
+/* =====================================================================
+ * 17. Tabs (pymdownx.tabbed) — calmer style
+ * ===================================================================== */
+.md-typeset .tabbed-set > input:checked + label {
+  color: var(--flow-blue-700);
+  border-color: var(--flow-blue-500);
+}
+.md-typeset .tabbed-set > label {
+  font-weight: 500;
+  color: var(--flow-gray-600);
+  transition: color .12s ease;
+}
+.md-typeset .tabbed-set > label:hover { color: var(--flow-navy-500); }
+
+/* =====================================================================
+ * 18. Print — clean PDF export
+ * ===================================================================== */
+@media print {
+  .md-header, .md-tabs, .md-sidebar, .md-footer,
+  .md-top, .md-search { display: none !important; }
+  .md-typeset h1 { page-break-before: always; }
+  .md-typeset h1:first-of-type { page-break-before: auto; }
+  .md-typeset table, .md-typeset pre, .md-typeset .mermaid { page-break-inside: avoid; }
+  body, .md-typeset { color: #111 !important; font-size: 10.5pt; }
+  .md-typeset h1 { font-size: 20pt; }
+  .md-typeset h2 { font-size: 15pt; }
+  .md-typeset h3 { font-size: 12pt; }
+  .md-content { margin: 0 !important; max-width: 100% !important; }
+  .md-grid     { max-width: 100% !important; }
+  .md-typeset .grid.cards,
+  .md-typeset .grid.cards > ul { grid-template-columns: 1fr 1fr; }
+  .md-typeset a { color: #111 !important; border-bottom: none; }
+}
+
+/* =====================================================================
+ * 19. Reduced motion — respect user OS preference
+ * ===================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .md-typeset .grid.cards > ul > li:hover { transform: none; }
+}
+
+/* =====================================================================
+ * 20. Mobile / narrow-screen tuning
+ * ===================================================================== */
+@media (max-width: 600px) {
+  .md-typeset h1 { font-size: 1.4rem; }
+  .md-typeset h2 { font-size: 1.15rem; margin-top: 1.6rem; }
+  .md-typeset h3 { font-size: 1.0rem;  margin-top: 1.2rem; }
+  .md-typeset .grid.cards > ul > li { padding: 1rem; }
+  .md-typeset table:not([class]) { font-size: .76rem; }
+  .md-typeset table:not([class]) thead th,
+  .md-typeset table:not([class]) td { padding: .45em .55em; }
+  .md-content__inner { padding: 0 .8rem; }
+}
+
+/* =====================================================================
+ * 21. Landing-page hero & sections — full-bleed, premium feel
+ *
+ *    Activated on pages with `hide: navigation, toc` (the home page) by
+ *    targeting Material's body class hooks. Hero is wrapped in
+ *    `<div class="flow-hero">`, and each downstream block in
+ *    `<div class="flow-section">` so they can opt in/out of full bleed.
+ * ===================================================================== */
+
+/* When both nav and toc are hidden, content should fill the canvas.
+   Material applies `data-md-state` flags via JS, so we lean on the more
+   reliable `.md-content__inner` width override that already exists in
+   §1, plus per-element constraints inside `.flow-section`. */
+.md-content .md-typeset > .flow-hero ~ * { max-width: none; }
+
+/* ---- Hero -------------------------------------------------------- */
+.md-typeset .flow-hero {
+  position: relative;
+  margin: -1.6rem -.8rem 2.5rem;
+  padding: 4rem clamp(1.2rem, 4vw, 4rem) 3.5rem;
+  background:
+    radial-gradient(circle at 85% 0%, rgba(32, 84, 147, 0.18) 0%, transparent 55%),
+    radial-gradient(circle at 0% 100%, rgba(202, 138, 4, 0.10) 0%, transparent 50%),
+    linear-gradient(135deg, var(--flow-navy-600) 0%, var(--flow-navy-500) 55%, var(--flow-blue-700) 100%);
+  color: #ffffff;
+  border-radius: 0;
+  isolation: isolate;
+  overflow: hidden;
+}
+.md-typeset .flow-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-position: -1px -1px;
+  mask-image: linear-gradient(180deg, transparent 0%, #000 30%, #000 70%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 30%, #000 70%, transparent 100%);
+  z-index: -1;
+}
+.md-typeset .flow-hero::after {
+  content: "";
+  position: absolute;
+  right: -160px;
+  top: -160px;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(81, 124, 188, 0.22) 0%, transparent 70%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.md-typeset .flow-hero__eyebrow {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  margin: 0 auto 1.4rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--flow-blue-200);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: .32rem .8rem;
+  border-radius: 999px;
+  line-height: 1.4;
+  text-align: center;
+}
+.md-typeset .flow-hero__eyebrow > p {
+  margin: 0;
+  display: inline;
+}
+
+.md-typeset .flow-hero__title,
+.md-typeset h1.flow-hero__title {
+  font-family: 'Source Sans 3', 'Public Sans', sans-serif;
+  font-size: clamp(1.9rem, 1.2rem + 2.8vw, 4rem);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  color: #ffffff !important;
+  margin: 0 0 1rem;
+  max-width: 32ch;
+}
+.md-typeset h1.flow-hero__title::before { display: none; }
+.md-typeset h1.flow-hero__title .headerlink { display: none; }
+
+.md-typeset .flow-hero__lede {
+  font-size: clamp(1rem, .9rem + .35vw, 1.25rem);
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.86);
+  max-width: 64ch;
+  margin: 0 0 1.6rem;
+}
+
+.md-typeset .flow-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem;
+  margin: 0 0 1.8rem;
+}
+
+.md-typeset .flow-hero__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .65rem;
+  margin: 0;
+}
+.md-typeset .flow-hero__cta .md-button {
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--flow-navy-600) !important;
+  border-color: rgba(255, 255, 255, 0.92);
+  font-weight: 600;
+}
+.md-typeset .flow-hero__cta .md-button:hover {
+  background: #ffffff;
+  color: var(--flow-navy-700) !important;
+  border-color: #ffffff;
+  transform: translateY(-1px);
+}
+.md-typeset .flow-hero__cta .md-button--primary {
+  background: var(--flow-blue-500);
+  color: #ffffff !important;
+  border-color: var(--flow-blue-500);
+}
+.md-typeset .flow-hero__cta .md-button--primary:hover {
+  background: var(--flow-blue-300);
+  color: #ffffff !important;
+  border-color: var(--flow-blue-300);
+}
+
+/* ---- Pills (status / metadata) ---------------------------------- */
+.md-typeset .flow-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  padding: .25rem .7rem;
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.10);
+  color: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.20);
+}
+.md-typeset .flow-pill--brand {
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--flow-navy-700);
+  border-color: rgba(255, 255, 255, 0.96);
+}
+.md-typeset .flow-pill--success {
+  background: rgba(46, 133, 64, 0.18);
+  color: #B6E0BD;
+  border-color: rgba(46, 133, 64, 0.45);
+}
+.md-typeset .flow-pill--warning {
+  background: rgba(202, 138, 4, 0.18);
+  color: #F2D58A;
+  border-color: rgba(202, 138, 4, 0.45);
+}
+.md-typeset .flow-pill--danger {
+  background: rgba(181, 9, 9, 0.18);
+  color: #F2A1A1;
+  border-color: rgba(181, 9, 9, 0.45);
+}
+
+/* ---- Section wrappers ------------------------------------------- */
+.md-typeset .flow-section {
+  margin: 2.2rem 0;
+}
+.md-typeset .flow-section--tinted {
+  background: var(--flow-gray-50);
+  border-radius: var(--flow-radius-lg);
+  padding: 2rem clamp(1rem, 3vw, 2.5rem);
+  border: 1px solid rgba(17, 46, 81, 0.06);
+}
+[data-md-color-scheme="slate"] .md-typeset .flow-section--tinted {
+  background: rgba(255, 255, 255, 0.025);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+/* ---- Side margin compensation when hero goes edge-to-edge ------- */
+@media (min-width: 60em) {
+  .md-typeset .flow-hero { margin-left: -2.4rem; margin-right: -2.4rem; }
+}
+@media (min-width: 1440px) {
+  .md-typeset .flow-hero { margin-left: -3.6rem; margin-right: -3.6rem; }
+}
+
+/* ---- Mobile hero --------------------------------------------------- */
+@media (max-width: 600px) {
+  .md-typeset .flow-hero {
+    padding: 2.5rem 1rem 2rem;
+    margin: -1rem -.8rem 1.6rem;
+  }
+  .md-typeset .flow-hero__cta { flex-direction: column; align-items: stretch; }
+  .md-typeset .flow-hero__cta .md-button { text-align: center; }
+}
+
+/* =====================================================================
+ * 22. Stats bar — at-a-glance metrics under the hero
+ *
+ *    Renders as a responsive grid: 2-col on phones, 3-col on tablets,
+ *    6-col on widescreens. Each tile shows a big numeric value and a
+ *    label. Tiles lift on hover.
+ * ===================================================================== */
+.md-typeset .flow-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: .75rem;
+  margin: -1rem 0 2.4rem;
+  padding: 0;
+}
+@media (min-width: 600px)  { .md-typeset .flow-stats { grid-template-columns: repeat(3, 1fr); gap: 1rem; } }
+@media (min-width: 1024px) { .md-typeset .flow-stats { grid-template-columns: repeat(6, 1fr); } }
+
+.md-typeset .flow-stat {
+  background: var(--md-default-bg-color);
+  border: 1px solid rgba(17, 46, 81, 0.10);
+  border-radius: var(--flow-radius-lg);
+  padding: 1.2rem 1rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--flow-shadow-sm);
+  transition: box-shadow .18s ease, transform .18s ease, border-color .18s ease;
+}
+.md-typeset .flow-stat::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--flow-navy-500) 0%, var(--flow-blue-500) 100%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .25s ease;
+}
+.md-typeset .flow-stat:hover {
+  border-color: var(--flow-blue-300);
+  box-shadow: var(--flow-shadow-md);
+  transform: translateY(-2px);
+}
+.md-typeset .flow-stat:hover::after { transform: scaleX(1); }
+
+.md-typeset .flow-stat__value {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.4rem);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--flow-navy-500);
+  letter-spacing: -0.015em;
+  margin-bottom: .35rem;
+}
+[data-md-color-scheme="slate"] .md-typeset .flow-stat__value { color: var(--flow-blue-100); }
+
+.md-typeset .flow-stat__label {
+  font-size: .78rem;
+  font-weight: 500;
+  color: var(--flow-gray-600);
+  letter-spacing: 0.01em;
+  line-height: 1.35;
+}
+[data-md-color-scheme="slate"] .md-typeset .flow-stat__label { color: var(--flow-blue-200); }
+
+/* =====================================================================
+ * 23. Comprehensive responsive breakpoints
+ *
+ *    Material's defaults handle phone vs. desktop, but in the laptop
+ *    band (768-1280 px) layouts felt static. These breakpoints make
+ *    every reflow visible: card columns, hero margins, and content
+ *    rhythm all step at common widths.
+ * ===================================================================== */
+
+/* Tablet portrait (>=768): 2-column grid cards, slightly tighter hero. */
+@media (min-width: 768px) {
+  .md-typeset .grid.cards > ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+  .md-typeset .flow-hero { padding: 3rem clamp(1.5rem, 4vw, 3.5rem); }
+}
+
+/* Tablet landscape / small laptop (>=1024): 3-column cards + larger hero. */
+@media (min-width: 1024px) {
+  .md-typeset .grid.cards > ul {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.1rem;
+  }
+  .md-typeset .flow-hero {
+    padding: 3.5rem clamp(2rem, 4vw, 4rem);
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+  }
+}
+
+/* Standard laptop (>=1280): 3-column cards, more gap. */
+@media (min-width: 1280px) {
+  .md-typeset .grid.cards > ul {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+}
+
+/* Desktop (>=1440): 4-column cards. */
+@media (min-width: 1440px) {
+  .md-typeset .grid.cards > ul {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Wide desktop (>=1920): 4-column cards with more gap. */
+@media (min-width: 1920px) {
+  .md-typeset .grid.cards > ul {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+/* Extra-wide / ultrawide (>=2400): cap the hero so it doesn't stretch
+   beyond a comfortable read length but still uses canvas. */
+@media (min-width: 2400px) {
+  .md-typeset .flow-hero {
+    padding-left: clamp(3rem, 5vw, 6rem);
+    padding-right: clamp(3rem, 5vw, 6rem);
+  }
+}
+
+/* Tablet (601-1023): center hero text for a friendlier balance. */
+@media (min-width: 601px) and (max-width: 1023px) {
+  .md-typeset .flow-hero { text-align: left; }
+  .md-typeset .flow-hero__cta { gap: .55rem; }
+  .md-typeset .flow-hero__cta .md-button { padding: .5rem .85rem; }
+}
+
+/* =====================================================================
+ * 24. Content-page polish — premium feel for the 14 artifact pages
+ * ===================================================================== */
+
+/* ---- H1 with brand gradient underline -------------------------- */
+.md-content__inner > .md-typeset > h1:first-of-type,
+.md-content__inner > h1:first-of-type {
+  position: relative;
+  padding-bottom: .8rem;
+  margin-bottom: 1.2rem;
+}
+.md-content__inner > .md-typeset > h1:first-of-type::after,
+.md-content__inner > h1:first-of-type::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 96px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--flow-navy-500) 0%, var(--flow-blue-500) 100%);
+  border-radius: 2px;
+}
+
+/* ---- "Phase / Artifact" meta strip --------------------------------
+ *
+ *  Authors write this paragraph immediately after the H1:
+ *      **Phase:** Design · **Artifact family:** Architecture
+ *
+ *  The CSS below upgrades that paragraph into a metadata pill row
+ *  without changing the markdown. We target the very first paragraph
+ *  that contains a <strong> child, sits right after the H1, and
+ *  apply pill styling to its <strong> elements.
+ */
+.md-content__inner h1:first-of-type + p:has(strong) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  align-items: center;
+  font-size: .82rem;
+  color: var(--flow-gray-600);
+  margin: 0 0 1.4rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(17, 46, 81, 0.08);
+}
+.md-content__inner h1:first-of-type + p:has(strong) strong {
+  display: inline-block;
+  padding: .25rem .65rem;
+  font-size: .7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: var(--flow-blue-50);
+  color: var(--flow-blue-700);
+  border: 1px solid rgba(32, 84, 147, 0.20);
+  border-radius: 999px;
+}
+[data-md-color-scheme="slate"] .md-content__inner h1:first-of-type + p:has(strong) strong {
+  background: rgba(130, 168, 211, 0.12);
+  color: var(--flow-blue-100);
+  border-color: rgba(130, 168, 211, 0.25);
+}
+
+/* ---- H2 — numbered sections get a gradient rail ---------------- */
+.md-typeset h2 {
+  position: relative;
+  padding-left: .85rem;
+}
+.md-typeset h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .35em;
+  bottom: .35em;
+  width: 4px;
+  background: linear-gradient(180deg, var(--flow-navy-500) 0%, var(--flow-blue-500) 100%);
+  border-radius: 2px;
+}
+.md-typeset h2:hover::before {
+  background: linear-gradient(180deg, var(--flow-blue-500) 0%, var(--flow-blue-300) 100%);
+}
+
+/* H1 inside the home page hero already has a different decoration. */
+.md-typeset .flow-hero h2,
+.md-typeset .flow-hero h2::before { display: revert; }
+.md-typeset .flow-hero h2::before { content: none; }
+
+/* ---- H3 — subtle navy underline on hover ------------------------ */
+.md-typeset h3 {
+  border-bottom: 1px solid transparent;
+  transition: border-color .15s ease;
+}
+.md-typeset h3:hover {
+  border-bottom-color: rgba(32, 84, 147, 0.15);
+}
+
+/* ---- Mermaid container — premium frame ------------------------- */
+.md-typeset .mermaid {
+  background: linear-gradient(180deg, #FBFCFD 0%, var(--flow-gray-50) 100%);
+  border: 1px solid rgba(17, 46, 81, 0.10);
+  border-radius: var(--flow-radius-lg);
+  padding: 1.4rem 1rem;
+  margin: 1.4rem 0;
+  box-shadow: var(--flow-shadow-sm);
+  transition: box-shadow .2s ease, border-color .2s ease;
+}
+.md-typeset .mermaid:hover {
+  border-color: rgba(32, 84, 147, 0.25);
+  box-shadow: var(--flow-shadow-md);
+}
+[data-md-color-scheme="slate"] .md-typeset .mermaid {
+  background: linear-gradient(180deg, rgba(255,255,255,0.025) 0%, rgba(255,255,255,0.04) 100%);
+  border-color: rgba(194, 205, 219, 0.15);
+}
+
+/* ---- Right TOC sidebar — refined ------------------------------- */
+.md-sidebar--secondary .md-nav__title {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: .82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--flow-navy-500);
+  padding-bottom: .5rem;
+  border-bottom: 1px solid rgba(17, 46, 81, 0.10);
+  margin-bottom: .5rem;
+}
+[data-md-color-scheme="slate"] .md-sidebar--secondary .md-nav__title { color: var(--flow-blue-100); }
+
+.md-sidebar--secondary .md-nav__list { padding-top: .25rem; }
+.md-sidebar--secondary .md-nav__link {
+  font-size: .78rem;
+  line-height: 1.45;
+  padding: .25rem .55rem;
+  border-left: 2px solid transparent;
+  border-radius: 0;
+  margin: 0;
+}
+.md-sidebar--secondary .md-nav__link:hover {
+  background: rgba(32, 84, 147, 0.05);
+  color: var(--flow-blue-700);
+}
+.md-sidebar--secondary .md-nav__link--active {
+  border-left-color: var(--flow-blue-500);
+  background: rgba(32, 84, 147, 0.08);
+  font-weight: 600;
+}
+
+/* ---- Left primary nav — better hierarchy ----------------------- */
+.md-sidebar--primary .md-nav__item--section > .md-nav__link {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: .78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--flow-navy-500);
+  padding-top: 1rem;
+}
+[data-md-color-scheme="slate"] .md-sidebar--primary .md-nav__item--section > .md-nav__link {
+  color: var(--flow-blue-100);
+}
+
+/* ---- Page prev/next footer nav — distinct cards ---------------- */
+.md-footer__inner.md-grid {
+  background: var(--flow-navy-700);
+  padding: 1.6rem 1rem;
+}
+.md-footer__link {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  padding: .85rem 1.1rem;
+  border-radius: var(--flow-radius);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: background .18s ease, transform .18s ease, border-color .18s ease;
+  flex: 1 1 auto;
+  max-width: 28rem;
+}
+.md-footer__link:hover {
+  background: rgba(255, 255, 255, 0.10);
+  border-color: rgba(130, 168, 211, 0.35);
+  transform: translateY(-1px);
+}
+.md-footer__direction {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .65rem !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--flow-blue-200) !important;
+  opacity: 1;
+}
+.md-footer__title { font-weight: 600; }
+
+/* ---- "Where to go next" / quote-style admonition cards --------- */
+.md-typeset details.tip,
+.md-typeset .admonition.tip {
+  background: linear-gradient(135deg, rgba(46, 133, 64, 0.04) 0%, rgba(46, 133, 64, 0.10) 100%);
+}
+.md-typeset details.note,
+.md-typeset .admonition.note,
+.md-typeset details.info,
+.md-typeset .admonition.info {
+  background: linear-gradient(135deg, rgba(32, 84, 147, 0.04) 0%, rgba(32, 84, 147, 0.10) 100%);
+}
+.md-typeset details.warning,
+.md-typeset .admonition.warning {
+  background: linear-gradient(135deg, rgba(202, 138, 4, 0.04) 0%, rgba(202, 138, 4, 0.10) 100%);
+}
+.md-typeset details.danger,
+.md-typeset .admonition.danger {
+  background: linear-gradient(135deg, rgba(181, 9, 9, 0.04) 0%, rgba(181, 9, 9, 0.10) 100%);
+}
+.md-typeset details.abstract,
+.md-typeset .admonition.abstract {
+  background: linear-gradient(135deg, rgba(17, 46, 81, 0.04) 0%, rgba(17, 46, 81, 0.10) 100%);
+}
+
+/* ---- Tables become wider on content pages ---------------------- */
+@media (min-width: 1280px) {
+  .md-typeset > table:not([class]),
+  .md-typeset .md-table {
+    margin-left: -1rem;
+    margin-right: -1rem;
+    max-width: calc(100% + 2rem);
+  }
+}
+
+/* ---- Code blocks break out wider on big screens ---------------- */
+@media (min-width: 1280px) {
+  .md-typeset > .highlight,
+  .md-typeset > pre {
+    margin-left: -1rem;
+    margin-right: -1rem;
+  }
+}
+
+/* =====================================================================
+ * 25. Scrollbar styling — match brand palette (WebKit + Firefox)
+ * ===================================================================== */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(32, 84, 147, 0.4) transparent;
+}
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb {
+  background: rgba(32, 84, 147, 0.35);
+  border-radius: 5px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+*::-webkit-scrollbar-thumb:hover { background: rgba(32, 84, 147, 0.65); background-clip: padding-box; }
+
+/* =====================================================================
+ * 26. API ACCESS CONSOLE — premium live-endpoint cards
+ *     Used at the top of the API spec page; mirrors Stripe / Linear /
+ *     Vercel docs treatment for "try it now" CTAs.
+ * ===================================================================== */
+.md-typeset .flow-api-console {
+  position: relative;
+  margin: 1.8rem 0 2.4rem;
+  padding: 1.85rem 1.85rem 1.7rem;
+  border: 1px solid var(--flow-gray-200);
+  border-radius: 18px;
+  background:
+    radial-gradient(900px 480px at -8% -40%, rgba(32, 84, 147, 0.07), transparent 55%),
+    radial-gradient(700px 400px at 108% 140%, rgba(184, 134, 11, 0.06), transparent 55%),
+    linear-gradient(180deg, var(--flow-gray-50) 0%, #ffffff 100%);
+  box-shadow:
+    0 1px 2px rgba(17, 46, 81, 0.04),
+    0 12px 32px -18px rgba(17, 46, 81, 0.10);
+  overflow: hidden;
+}
+.md-typeset .flow-api-console::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg,
+    var(--flow-navy-700) 0%,
+    var(--flow-blue-600) 45%,
+    var(--flow-amber-700) 100%);
+}
+
+.md-typeset .flow-api-console__head {
+  margin-bottom: 1.45rem;
+  max-width: 60ch;
+}
+.md-typeset .flow-api-console__eyebrow {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--flow-blue-600);
+  margin-bottom: 0.45rem;
+}
+.md-typeset .flow-api-console__title {
+  font-family: "Source Sans 3", "Public Sans", sans-serif;
+  font-size: clamp(1.4rem, 1.05rem + 0.7vw, 1.85rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--flow-navy-700);
+  margin: 0 0 0.45rem;
+  line-height: 1.15;
+}
+.md-typeset .flow-api-console__lede {
+  color: var(--flow-gray-700);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.md-typeset .flow-api-console__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+@media (max-width: 1024px) {
+  .md-typeset .flow-api-console__grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .md-typeset .flow-api-console__grid { grid-template-columns: 1fr; }
+}
+
+.md-typeset a.flow-api-card,
+.md-typeset .flow-api-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.05rem 1.05rem 0.95rem;
+  border: 1px solid var(--flow-gray-200);
+  border-radius: 14px;
+  background: #fff;
+  text-decoration: none !important;
+  color: var(--flow-navy-700);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.2s ease,
+              box-shadow 0.2s ease;
+}
+.md-typeset .flow-api-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--flow-blue-600);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.md-typeset .flow-api-card--swagger::before { background: var(--flow-green-600, #2E8540); }
+.md-typeset .flow-api-card--redoc::before   { background: var(--flow-amber-700, #B8860B); }
+.md-typeset .flow-api-card--spec::before    { background: var(--flow-blue-600); }
+
+.md-typeset a.flow-api-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--flow-blue-300, rgba(32, 84, 147, 0.4));
+  box-shadow: 0 16px 32px -18px rgba(17, 46, 81, 0.22);
+  text-decoration: none !important;
+}
+.md-typeset a.flow-api-card:hover::before { opacity: 1; }
+
+.md-typeset .flow-api-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.md-typeset .flow-api-card__badge {
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: var(--flow-blue-50, rgba(32, 84, 147, 0.08));
+  color: var(--flow-blue-600);
+  flex-shrink: 0;
+}
+.md-typeset .flow-api-card__badge svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+  display: block;
+}
+.md-typeset .flow-api-card--swagger .flow-api-card__badge {
+  background: rgba(46, 133, 64, 0.1);
+  color: var(--flow-green-600, #2E8540);
+}
+.md-typeset .flow-api-card--redoc .flow-api-card__badge {
+  background: rgba(184, 134, 11, 0.10);
+  color: var(--flow-amber-700, #B8860B);
+}
+.md-typeset .flow-api-card--spec .flow-api-card__badge {
+  background: rgba(32, 84, 147, 0.10);
+  color: var(--flow-blue-600);
+}
+
+.md-typeset .flow-api-card__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.36rem;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--flow-green-600, #2E8540);
+  padding: 0.22rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(46, 133, 64, 0.08);
+  border: 1px solid rgba(46, 133, 64, 0.22);
+}
+.md-typeset .flow-api-card__status::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--flow-green-600, #2E8540);
+  box-shadow: 0 0 0 3px rgba(46, 133, 64, 0.18);
+  animation: flow-api-pulse 2.4s ease-in-out infinite;
+}
+.md-typeset .flow-api-card__status--spec {
+  color: var(--flow-blue-600);
+  background: rgba(32, 84, 147, 0.08);
+  border-color: rgba(32, 84, 147, 0.22);
+}
+.md-typeset .flow-api-card__status--spec::before {
+  background: var(--flow-blue-600);
+  box-shadow: 0 0 0 3px rgba(32, 84, 147, 0.18);
+  animation: none;
+}
+@keyframes flow-api-pulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(46, 133, 64, 0.18); }
+  50%      { box-shadow: 0 0 0 6px rgba(46, 133, 64, 0.06); }
+}
+
+.md-typeset .flow-api-card__name {
+  font-family: "Source Sans 3", "Public Sans", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--flow-navy-700);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.md-typeset .flow-api-card__lede {
+  color: var(--flow-gray-700);
+  font-size: 0.84rem;
+  line-height: 1.5;
+  margin: 0;
+  flex: 1 1 auto;
+}
+
+.md-typeset .flow-api-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--flow-blue-600);
+  margin: 0.15rem 0 0 0;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--flow-gray-100, rgba(0, 0, 0, 0.06));
+}
+.md-typeset .flow-api-card--swagger .flow-api-card__cta { color: var(--flow-green-600, #2E8540); }
+.md-typeset .flow-api-card--redoc   .flow-api-card__cta { color: var(--flow-amber-700, #B8860B); }
+.md-typeset .flow-api-card__cta::after {
+  content: "→";
+  font-size: 1rem;
+  transition: transform 0.2s ease;
+}
+.md-typeset a.flow-api-card:hover .flow-api-card__cta::after {
+  transform: translateX(4px);
+}
+
+/* dark mode */
+[data-md-color-scheme="slate"] .md-typeset .flow-api-console {
+  background:
+    radial-gradient(900px 480px at -8% -40%, rgba(32, 84, 147, 0.20), transparent 55%),
+    radial-gradient(700px 400px at 108% 140%, rgba(184, 134, 11, 0.10), transparent 55%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, transparent 100%);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+[data-md-color-scheme="slate"] .md-typeset .flow-api-card,
+[data-md-color-scheme="slate"] .md-typeset a.flow-api-card {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.95);
+}
+[data-md-color-scheme="slate"] .md-typeset .flow-api-card__name { color: #fff; }
+[data-md-color-scheme="slate"] .md-typeset .flow-api-card__lede { color: rgba(255, 255, 255, 0.72); }
+[data-md-color-scheme="slate"] .md-typeset .flow-api-card__url {
+  background: rgba(0, 0, 0, 0.25);
+  border-color: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.85);
+}
+[data-md-color-scheme="slate"] .md-typeset .flow-api-console__title {
+  color: #fff;
+}
+[data-md-color-scheme="slate"] .md-typeset .flow-api-console__lede {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+/* =====================================================================
+ * 27. HERO API STRIP — discrete live-API quick-launch on the home page,
+ *     sits below the primary CTA inside .flow-hero.
+ * ===================================================================== */
+.md-typeset .flow-hero__api {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.45rem 1.1rem;
+  margin-top: 1.4rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  width: 100%;
+}
+.md-typeset .flow-hero__api-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  margin-right: 0.2rem;
+}
+.md-typeset .flow-hero__api-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+  padding-bottom: 1px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.md-typeset .flow-hero__api-link:hover {
+  color: #fff;
+  border-bottom-color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+}
+.md-typeset .flow-hero__api-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.25);
+  animation: flow-hero-api-pulse 2.4s ease-in-out infinite;
+}
+@keyframes flow-hero-api-pulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.25); }
+  50%      { box-shadow: 0 0 0 6px rgba(74, 222, 128, 0.08); }
+}
+
+/* =====================================================================
+ * CCFP — role persona badges
+ *
+ * The 12 in-app roles. Colors keep strong contrast against white text
+ * and align with the federal USWDS palette used throughout the theme.
+ * ===================================================================== */
+.persona-badge.mcsap-inspector   { background:#1B4F8C; color:#fff; }
+.persona-badge.state-analyst     { background:#2E78C7; color:#fff; }
+.persona-badge.project-team      { background:#205493; color:#fff; }
+.persona-badge.project-admin     { background:#112E51; color:#fff; }
+.persona-badge.db-admin          { background:#2E5985; color:#fff; }
+.persona-badge.data-scientist    { background:#1F7A8C; color:#fff; }
+.persona-badge.bts-cipsea        { background:#5A4A8C; color:#fff; }
+.persona-badge.fmcsa-cipsea      { background:#735E81; color:#fff; }
+.persona-badge.federal-user      { background:#3F6E5A; color:#fff; }
+.persona-badge.state-user        { background:#3E5A2E; color:#fff; }
+.persona-badge.public-user       { background:#7B5E2E; color:#fff; }
+.persona-badge.system-admin      { background:#565C65; color:#fff; }
+
+/* Persona-chip rows: lay chips out as a wrapping flex strip with
+ * consistent horizontal + vertical gap. Implemented as `inline-flex`
+ * so the container nests cleanly inside a paragraph or list item
+ * without breaking the surrounding `<p>` (block-level `<div>`s get
+ * auto-closed by the browser inside `<p>`, which collapses the gap). */
+.persona-chip-row {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.5rem;
+  align-items: center;
+  vertical-align: middle;
+  margin: 0.3rem 0 0.15rem;
+  padding: 0;
+  max-width: 100%;
+}
+.persona-chip-row .persona-badge {
+  margin: 0;
+  vertical-align: baseline;
+}
+
+/* =====================================================================
+ * 28. Hero lede guard
+ *
+ * The content-page metadata-strip rule (§24: `h1:first-of-type + p:has(strong)`)
+ * upgrades a paragraph's <strong> into pills and dims the paragraph. On the
+ * landing page the hero lede immediately follows the <h1>, so if it contains
+ * any bold it gets hijacked into unreadable pills on the navy hero. Keep the
+ * hero lede clean and high-contrast regardless of its content.
+ * ===================================================================== */
+.md-typeset .flow-hero__lede {
+  color: rgba(255, 255, 255, 0.86) !important;
+  border-bottom: 0 !important;
+  padding-bottom: 0 !important;
+  display: block !important;
+  gap: 0 !important;
+}
+.md-typeset .flow-hero__lede strong {
+  display: inline !important;
+  padding: 0 !important;
+  font-size: inherit !important;
+  font-weight: 700 !important;
+  letter-spacing: inherit !important;
+  text-transform: none !important;
+  background: transparent !important;
+  color: inherit !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+}

@@ -1,0 +1,77 @@
+/**
+ * CCFP chart styling (Recharts presentation layer).
+ *
+ * Recharts renders SVG with stable class names. CSS overrides SVG presentation
+ * attributes, so all chart typography, grid/axis lines, value labels, and legend
+ * styling live here for one consistent look across the application.
+ *
+ * NOTE: bar thickness (barSize), category spacing (barCategoryGap), and
+ * whole-number axis ticks (allowDecimals) are SVG geometry that Recharts computes
+ * from component props — those cannot be expressed in CSS and stay in the chart
+ * components.
+ */
+
+/* All chart text uses the app font. */
+.recharts-wrapper text {
+  font-family: 'Public Sans', system-ui, sans-serif;
+}
+
+/* Axis tick labels: numeric axis muted, category axis darker. */
+.recharts-cartesian-axis-tick-value {
+  font-size: 11px;
+}
+.recharts-xAxis .recharts-cartesian-axis-tick-value {
+  fill: hsl(215 16% 47%); /* neutral-500 */
+}
+.recharts-yAxis .recharts-cartesian-axis-tick-value {
+  fill: hsl(215 30% 15%); /* foreground */
+  font-weight: 500;
+}
+
+/* Grid + axis lines: subtle border tone. */
+.recharts-cartesian-grid line {
+  stroke: hsl(214 25% 90%); /* border */
+}
+.recharts-cartesian-axis-line,
+.recharts-cartesian-axis-tick-line {
+  stroke: hsl(214 25% 90%);
+}
+
+/* Value labels rendered at bar/point ends. */
+.recharts-label-list text,
+.recharts-bar-rectangles + .recharts-label-list text {
+  font-size: 11px;
+  font-weight: 600;
+  fill: hsl(215 30% 15%);
+}
+
+/* Funnel stage labels. */
+.recharts-funnel-labelList text {
+  font-size: 11px;
+  font-weight: 600;
+  fill: hsl(215 30% 15%);
+}
+
+/* Legend rows (multi-series line/bar charts). */
+.recharts-legend-item-text {
+  color: hsl(215 16% 47%) !important;
+  font-size: 11px;
+}
+
+/* Soften bar corners + hover affordance on the horizontal-bar charts. */
+.ccfp-bars .recharts-bar-rectangle path {
+  transition: opacity 0.15s ease;
+}
+.ccfp-bars:hover .recharts-bar-rectangle path:hover {
+  opacity: 0.88;
+}
+
+/**
+ * Chart card grids — stretch items so paired cards in a row share the same
+ * height (e.g. a bar chart next to a taller donut). The chart cards center
+ * their content vertically, so the matched height reads as balanced padding
+ * rather than a large empty band under a short chart.
+ */
+.chart-grid {
+  align-items: stretch;
+}

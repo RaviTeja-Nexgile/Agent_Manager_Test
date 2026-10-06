@@ -1,0 +1,107 @@
+/* CCFP Portal — global stylesheet. */
+
+@import '@fontsource/public-sans/400.css';
+@import '@fontsource/public-sans/500.css';
+@import '@fontsource/public-sans/600.css';
+@import '@fontsource/public-sans/700.css';
+
+@import './styles/tokens.css';
+@import './styles/charts.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html,
+  body,
+  #root {
+    @apply h-full;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: 'rlig' 1, 'calt' 1, 'ss01' 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: hsl(var(--accent) / 0.22);
+    color: hsl(var(--foreground));
+  }
+
+  :focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px hsl(var(--background)),
+      0 0 0 4px hsl(var(--ring) / 0.55);
+    border-radius: calc(var(--radius) - 2px);
+  }
+
+  a {
+    @apply transition-colors;
+  }
+
+  code,
+  kbd,
+  samp,
+  pre {
+    font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  }
+  :not(pre) > code {
+    @apply rounded-sm bg-muted px-1 py-0.5 text-[0.875em];
+  }
+  kbd {
+    @apply inline-flex items-center rounded-sm border border-border bg-muted px-1.5 py-0.5 text-[0.75em] font-medium text-muted-foreground;
+  }
+
+  hr {
+    @apply border-0 border-t border-border my-4;
+  }
+
+  h1 { @apply text-2xl font-semibold tracking-tight; }
+  h2 { @apply text-xl font-semibold tracking-tight; }
+  h3 { @apply text-base font-semibold leading-tight; }
+  h4 { @apply text-sm font-semibold leading-tight; }
+  h5 { @apply text-sm font-medium leading-tight; }
+  h6 { @apply text-xs font-medium uppercase tracking-wider; }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--border)) transparent;
+  }
+  *::-webkit-scrollbar { width: 6px; height: 6px; }
+  *::-webkit-scrollbar-track { background: transparent; }
+  *::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--border));
+    border-radius: 9999px;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: hsl(var(--muted-foreground) / 0.6);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+    .animate-spin, [role='status'].animate-spin {
+      animation-duration: 1s !important;
+    }
+  }
+}
+
+@layer components {
+  .text-eyebrow {
+    @apply font-semibold uppercase text-muted-foreground;
+    font-size: 0.6875rem;
+    line-height: 1rem;
+    letter-spacing: 0.08em;
+  }
+}

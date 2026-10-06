@@ -1,0 +1,115 @@
+site_name: CCFP IT Solution — Delivery Documentation
+site_description: >-
+  Crash Causal Factors Program (CCFP) IT Solution for the Federal Motor
+  Carrier Safety Administration (FMCSA) — Phase 1 Heavy-Duty Truck Study.
+  Discovery, analysis, design, and operations artifacts for the client
+  review cycle.
+site_author: CCFP Delivery Team
+site_url: https://nexgile-dot-ccfp.nexgiletechnologies.com/docs/
+copyright: >-
+  &copy; 2026 CCFP Delivery Team — prepared for the FMCSA Crash Causal
+  Factors Program. Synthetic crash data only; no live State, BTS, or
+  federal source feeds connected.
+
+docs_dir: docs
+site_dir: site
+
+theme:
+  name: material
+  language: en
+  palette:
+    scheme: default
+    primary: custom
+    accent: custom
+  font:
+    text: Public Sans
+    code: JetBrains Mono
+  icon:
+    logo: material/truck-alert
+  features:
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.indexes
+    - navigation.footer
+    - toc.follow
+    - search.highlight
+    - search.share
+    - search.suggest
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - content.tooltips
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - toc:
+      permalink: true
+      toc_depth: 4
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:mermaid2.fence_mermaid
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.keys
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+  - pymdownx.caret
+  - pymdownx.mark
+
+plugins:
+  - search
+  - mermaid2:
+      version: 11.4.1
+
+extra_css:
+  - assets/extra.css?v=20260603b
+
+extra:
+  generator: false
+
+nav:
+  - Home: index.md
+  - Getting Started: quickstart.md
+  - Discover:
+      - 01 — Scope Statement: 01-discover/01-scope-statement.md
+      - 02 — Program / POC Charter: 01-discover/02-poc-charter.md
+      - 03 — Stakeholders & Personas: 01-discover/03-stakeholders-personas.md
+      - 04 — Business Requirements & Success Metrics: 01-discover/04-business-requirements.md
+      - 05 — Use Cases: 01-discover/05-use-cases.md
+      - 06 — User Stories & Acceptance Criteria: 01-discover/06-user-stories.md
+  - Analyze:
+      - 07 — Workflow / Process Diagrams: 02-analyze/07-workflow-process.md
+      - 08 — Domain Model / Data Model: 02-analyze/08-data-model.md
+      - 09 — API / Integration Specification: 02-analyze/09-api-specification.md
+      - 10 — RBAC / Roles & Permissions Matrix: 02-analyze/10-rbac-matrix.md
+  - Design:
+      - 11 — Architecture & Sequence Diagrams: 03-design/11-architecture-sequence.md
+      - 12 — Component Diagram: 03-design/12-component-diagram.md
+      - 13 — Solution Design (HLD/LLD Lite): 03-design/13-solution-design.md
+  - Release & Handoff:
+      - 14 — Operations Runbook / Support Guide: 04-release/14-operations-runbook.md
+  - Reference:
+      - Demo Access & Credentials: reference/demo-credentials.md
+      - Glossary: glossary.md
+      - FAQ: faq.md
+      - Release Notes: release-notes.md

@@ -1,0 +1,65 @@
+/**
+ * CCFP Portal — design tokens (CSS custom properties).
+ *
+ * Federal/gov SaaS palette aligned to USWDS / DOT branding.
+ *   dot-navy     #0F2A4A → hsl(215 67% 17%)
+ *   federal-blue #1F5AA8 → hsl(214 70% 39%)
+ *   neutral-500  #4B5563 → hsl(215 16% 47%)
+ *   alert-amber  #B45309 → hsl( 27 91% 37%)
+ *   alert-red    #B91C1C → hsl(  0 74% 42%)
+ *   success      #15803D → hsl(142 72% 29%)
+ */
+:root {
+  --background: 0 0% 100%;
+  --foreground: 215 30% 15%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 215 30% 15%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 215 30% 15%;
+
+  --brand: 215 67% 17%;
+  --primary: 215 67% 17%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 214 60% 95%;
+  --secondary-foreground: 215 67% 17%;
+
+  --muted: 214 32% 96%;
+  --muted-foreground: 215 16% 47%;
+
+  --accent: 214 70% 39%;
+  --accent-foreground: 0 0% 100%;
+
+  --destructive: 0 74% 42%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 214 25% 90%;
+  --input: 214 25% 90%;
+  --ring: 214 70% 39%;
+
+  --radius: 0.625rem;
+}
+
+.dark {
+  --background: 215 30% 9%;
+  --foreground: 0 0% 98%;
+  --card: 215 30% 12%;
+  --card-foreground: 0 0% 98%;
+  --popover: 215 30% 12%;
+  --popover-foreground: 0 0% 98%;
+  --brand: 214 60% 65%;
+  --primary: 214 60% 65%;
+  --primary-foreground: 215 30% 9%;
+  --secondary: 215 30% 18%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 215 28% 16%;
+  --muted-foreground: 215 14% 70%;
+  --accent: 214 75% 60%;
+  --accent-foreground: 215 30% 9%;
+  --destructive: 0 70% 55%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 215 25% 22%;
+  --input: 215 25% 22%;
+  --ring: 214 75% 60%;
+}

@@ -1,0 +1,23 @@
+-- =============================================================================
+-- CCFP IT Solution - Migration 0030: ELD partial-extraction status value
+-- =============================================================================
+-- BRD Jan-2026 Appendix E ("Ability to extract data from ELD output file so the
+-- data can be analyzed in the CCFP IT Solution") / documentation §8.7.
+--
+-- `eld_upload_status` had only UPLOADED | PARSING | PARSED | FAILED, so a file
+-- that WAS readable but whose extraction hit row-level problems (unparseable
+-- timestamps, unmapped duty codes, truncation at the row cap, a section the
+-- parser could not interpret) had to be recorded as a clean PARSED. That is the
+-- silent-failure shape this work removes: PARSED_WITH_ERRORS states plainly
+-- that events were extracted AND that at least one ERROR-severity issue was
+-- raised, with the detail in `eld_parse_issues` (migration 0031).
+--
+-- PostgreSQL forbids using a value added by ALTER TYPE ... ADD VALUE inside the
+-- same transaction that added it, and migrate.py runs each file in its own
+-- transaction — so this migration ONLY adds the value; the columns and tables
+-- that consume it live in 0031.
+--
+-- Idempotent / additive: ADD VALUE IF NOT EXISTS; no table or row is touched.
+-- =============================================================================
+
+ALTER TYPE eld_upload_status ADD VALUE IF NOT EXISTS 'PARSED_WITH_ERRORS';

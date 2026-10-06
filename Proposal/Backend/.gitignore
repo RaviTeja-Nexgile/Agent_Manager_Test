@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local environment & secrets
+.env
+.env.*
+
+# Local object storage (dev stand-in for cloud object storage)
+_object_store/
+
+# Virtual environments
+.venv/
+venv/
