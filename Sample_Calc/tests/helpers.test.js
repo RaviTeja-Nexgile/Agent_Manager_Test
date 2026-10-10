@@ -9,3 +9,7 @@ test("add adds two numbers", () => {
 test("formatResult returns text", () => {
   assert.strictEqual(helpers.formatResult(5), "5");
 });
+
+test("percentOf returns the given percent of a value", () => {
+  assert.strictEqual(helpers.percentOf(200, 10), 20);
+});
