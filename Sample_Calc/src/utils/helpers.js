@@ -8,3 +8,9 @@ function formatResult(value) {
 }
 
 module.exports = { add, formatResult };
+
+function percentOf(value, p) {
+  return value * p;
+}
+
+module.exports.percentOf = percentOf;
