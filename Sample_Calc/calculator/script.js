@@ -86,7 +86,7 @@ function compute() {
       result = a * b;
       break;
     case "divide":
-      result = b === 0 ? "Error" : a / b;
+      result = b === 0 ? "Cannot divide by 0" : a / b;
       break;
     case "percent":
       result = a * (b / 100);
