@@ -9,3 +9,7 @@ test("add adds two numbers", () => {
 test("formatResult returns text", () => {
   assert.strictEqual(helpers.formatResult(5), "5");
 });
+
+test("add accepts numeric strings", () => {
+  assert.strictEqual(helpers.add("2", "3"), 5);
+});
