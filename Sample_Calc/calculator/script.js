@@ -86,7 +86,19 @@ function compute() {
       result = a * b;
       break;
     case "divide":
-      result = b === 0 ? "Cannot divide by 0" : a / b;
+      if (b === 0) {
+        // Divide-by-zero is a terminal error: show the message and reset the
+        // calculator so the next operation starts fresh instead of treating
+        // the message as a numeric operand (which produced NaN).
+        addToHistory(expression, "Cannot divide by 0");
+        previousInput = "";
+        operator = null;
+        currentInput = "";
+        shouldResetDisplay = false;
+        updateDisplay("Cannot divide by 0");
+        return;
+      }
+      result = a / b;
       break;
     case "percent":
       result = a * (b / 100);
