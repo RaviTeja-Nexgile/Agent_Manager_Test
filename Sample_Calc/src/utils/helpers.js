@@ -1,6 +1,6 @@
 // Helper utilities for the calculator
 function add(a, b) {
-  return Number(a) + Number(b);
+  return Math.round((Number(a) + Number(b)) * 100) / 100;
 }
 
 function formatResult(value) {
