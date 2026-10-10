@@ -1,0 +1,11 @@
+name: CI
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Sample_Calc
+    steps:
+      - uses: actions/checkout@v5
+      - run: npm test

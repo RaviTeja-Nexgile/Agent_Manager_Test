@@ -1,0 +1,8 @@
+{
+  "name": "sample-calc",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/helpers.test.js"
+  }
+}
