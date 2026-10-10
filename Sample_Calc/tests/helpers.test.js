@@ -13,3 +13,7 @@ test("formatResult returns text", () => {
 test("add accepts numeric strings", () => {
   assert.strictEqual(helpers.add("2", "3"), 5);
 });
+
+test("add rounds to 2 decimals", () => {
+  assert.strictEqual(helpers.add(0.1, 0.2), 0.3);
+});
